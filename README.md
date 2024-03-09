@@ -1,4 +1,4 @@
-# Express Project README
+# Linkverse Backend API
 
 This is a simple Express.js project template to help you get started with building web applications using Node.js and Express framework.
 
