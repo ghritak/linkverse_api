@@ -3,12 +3,15 @@ import users from '../models/UserModel.js';
 export const login = async (req, res) => {
   try {
     const { email } = req.body;
-    const client = req.dbClient;
-    const database = client.db('linkverse');
-    const collection = database.collection('users');
-    // const result = await collection.find({}).toArray();
-    let user_ = await collection.findOne({ email }, { maxTimeMS: 15000 });
-    res.json(user_);
+    const users = req.database.collection('users');
+    let userEmail = await users.findOne({ email }, { maxTimeMS: 15000 });
+    if (!userEmail) {
+      return res
+        .status(400)
+        .json({ message: 'Please try to login with correct credentials.' });
+    }
+
+    res.json(userEmail);
   } catch (error) {
     console.error('Error fetching users:', error);
     res.status(500).json({ message: 'Internal server error' });

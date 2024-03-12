@@ -7,15 +7,16 @@ dotenv.config();
 
 const app = express();
 
-const uri = process.env.DB_URL;
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.DB_URL, {
   //   useNewUrlParser: true,
   //   useUnifiedTopology: true,
 });
 
+let database;
 const connectToMongoDB = async () => {
   try {
     await client.connect();
+    database = client.db('linkverse');
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
@@ -25,6 +26,7 @@ const connectToMongoDB = async () => {
 connectToMongoDB();
 
 app.use((req, res, next) => {
+  req.database = database;
   req.dbClient = client;
   next();
 });
