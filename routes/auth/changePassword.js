@@ -10,11 +10,11 @@ const changePassword = async (req, res) => {
       return res.status(400).json({ message: "User doesn't exist." });
     }
     const salt = await bcrypt.genSalt(10);
-    let securePaaword = await bcrypt.hash(password, salt);
+    let hashedPassword = await bcrypt.hash(password, salt);
 
     const result = await collection.updateOne(
       { email: email },
-      { $set: { password: securePaaword } }
+      { $set: { password: hashedPassword } }
     );
 
     if (result.modifiedCount === 1) {

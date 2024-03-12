@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const data = req.database.collection('users');
-    let user = await data.findOne({ email }, { maxTimeMS: 15000 });
+    const collection = req.database.collection('users');
+    let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
     if (!user) {
       return res
         .status(400)
