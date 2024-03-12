@@ -11,6 +11,13 @@ const signup = async (req, res) => {
         .status(400)
         .json({ message: 'User with this email already exist.' });
     }
+    user = await collection.findOne({ username });
+    if (user) {
+      return res
+        .status(400)
+        .json({ message: 'User with this username already exists.' });
+    }
+
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
 
