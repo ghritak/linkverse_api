@@ -14,9 +14,13 @@ const login = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
-      const authorizationToken = jwt.sign(user, process.env.SECRET_KEY, {
-        expiresIn: 3 * 24 * 60 * 60 * 1000,
-      });
+      const authorizationToken = jwt.sign(
+        { user_id: user._id.toString() },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: 3 * 24 * 60 * 60 * 1000,
+        }
+      );
       res.cookie('Authorization', authorizationToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -26,6 +30,7 @@ const login = async (req, res) => {
       return res.status(200).json({
         message: 'Logged in successfully',
         data: {
+          _id: user._id,
           fname: user.fname,
           lname: user.lname,
           username: user.username,

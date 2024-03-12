@@ -2,7 +2,13 @@ const updateProfile = async (req, res) => {
   try {
     const { email, fname, lname, username } = req.body;
     const collection = req.database.collection('users');
+
     let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
+
+    if (user._id.toString() !== req.user_id) {
+      return res.status(400).json({ message: 'Unauthorized token.' });
+    }
+
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist." });
     }
