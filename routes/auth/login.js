@@ -25,7 +25,12 @@ const login = async (req, res) => {
       });
       return res.status(200).json({
         message: 'Logged in successfully',
-        data: user,
+        data: {
+          fname: user.fname,
+          lname: user.lname,
+          username: user.username,
+          email: user.email,
+        },
         token: authorizationToken,
       });
     } else {
