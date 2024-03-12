@@ -7,26 +7,29 @@ dotenv.config();
 
 const app = express();
 
-const client = new MongoClient(process.env.DB_URL, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+const uri = process.env.DB_URL;
+const client = new MongoClient(uri, {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
 });
 
-async function run() {
+const connectToMongoDB = async () => {
   try {
     await client.connect();
-    await client.db('admin').command({ ping: 1 });
-    console.log(
-      'Pinged your deployment. You successfully connected to MongoDB!'
-    );
-  } finally {
-    await client.close();
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error);
+    process.exit(1);
   }
-}
-run().catch(console.dir);
+};
+connectToMongoDB();
+
+app.use((req, res, next) => {
+  req.dbClient = client;
+  next();
+});
+
+app.use(express.json());
 
 app.use('/', router);
 
