@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, signup } from './auth.js';
+import { changePassword, login, signup } from './auth.js';
 
 const router = express.Router();
 
@@ -9,5 +9,6 @@ const home = (req, res) => {
 router.get('/api', home);
 router.post('/login', login);
 router.post('/signup', signup);
+router.post('/changePassword', changePassword);
 
 export default router;
