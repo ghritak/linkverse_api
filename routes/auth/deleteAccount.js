@@ -1,8 +1,11 @@
 const deleteAccount = async (req, res) => {
   try {
     const { email } = req.body;
-    const collection = req.database.collection('users');
-    let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
+
+    const userCollection = req.database.collection('users');
+    const linkCollection = req.database.collection('links');
+
+    let user = await userCollection.findOne({ email }, { maxTimeMS: 15000 });
 
     if (user._id.toString() !== req.user_id) {
       return res.status(401).json({ message: 'Unauthorized token.' });
@@ -12,9 +15,11 @@ const deleteAccount = async (req, res) => {
       return res.status(400).json({ message: "User doesn't exist." });
     }
 
-    const result = await collection.deleteOne({ email });
+    const username = user.username;
+    const userResult = await userCollection.deleteOne({ email });
+    const linkResult = await linkCollection.deleteOne({ username });
 
-    if (result.deletedCount === 1) {
+    if (userResult.deletedCount === 1 && linkResult.deletedCount === 1) {
       return res.status(200).json({ message: 'Account deleted successfully' });
     } else {
       return res.status(404).json({ message: 'User not found' });

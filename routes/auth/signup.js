@@ -26,17 +26,19 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
 
-    const response = await userCollection.insertOne({
+    const userData = {
       fname,
       lname,
       username,
       email,
       password: hashedPassword,
-    });
+    };
+
+    await userCollection.insertOne(userData);
 
     await linksCollection.insertOne({
-      // user_id: response.insertedId,
       username,
+      links: [],
     });
 
     return res.status(200).json({ message: 'User created successfully' });
