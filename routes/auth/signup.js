@@ -8,14 +8,15 @@ const signup = async (req, res) => {
         .status(400)
         .json({ message: 'Please provide all the details.' });
     }
-    const collection = req.database.collection('users');
-    let user = await collection.findOne({ email });
+    const userCollection = req.database.collection('users');
+    const linksCollection = req.database.collection('links');
+    let user = await userCollection.findOne({ email });
     if (user) {
       return res
         .status(400)
         .json({ message: 'User with this email already exist.' });
     }
-    user = await collection.findOne({ username });
+    user = await userCollection.findOne({ username });
     if (user) {
       return res
         .status(400)
@@ -25,16 +26,21 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
 
-    await collection.insertOne({
+    const response = await userCollection.insertOne({
       fname,
       lname,
       username,
       email,
       password: hashedPassword,
     });
+
+    await linksCollection.insertOne({
+      user_id: response.insertedId,
+    });
+
     return res.status(200).json({ message: 'User created successfully' });
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

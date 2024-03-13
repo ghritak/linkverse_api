@@ -42,7 +42,7 @@ const login = async (req, res) => {
       return res.status(404).json({ message: 'Password is invalid.' });
     }
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

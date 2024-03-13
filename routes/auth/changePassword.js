@@ -23,7 +23,7 @@ const changePassword = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.log(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
