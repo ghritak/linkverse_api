@@ -6,7 +6,7 @@ const updateProfile = async (req, res) => {
     let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
 
     if (user._id.toString() !== req.user_id) {
-      return res.status(400).json({ message: 'Unauthorized token.' });
+      return res.status(401).json({ message: 'Unauthorized token.' });
     }
 
     if (!user) {

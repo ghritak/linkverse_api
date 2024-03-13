@@ -3,6 +3,11 @@ import bcrypt from 'bcrypt';
 const signup = async (req, res) => {
   try {
     const { fname, lname, username, email, password } = req.body;
+    if (!fname || !lname || !username || !email || !password) {
+      return res
+        .status(400)
+        .json({ message: 'Please provide all the details.' });
+    }
     const collection = req.database.collection('users');
     let user = await collection.findOne({ email });
     if (user) {
