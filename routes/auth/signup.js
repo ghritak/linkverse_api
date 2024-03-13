@@ -32,6 +32,8 @@ const signup = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      profile_photo: '',
+      banner_photo: '',
     };
 
     await userCollection.insertOne(userData);
