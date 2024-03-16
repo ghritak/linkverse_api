@@ -1,4 +1,4 @@
-const getLinkByUserName = async (req, res) => {
+const getUser = async (req, res) => {
   const username = req.query.username;
   if (!username)
     return res.status(400).json({ message: 'Please provide a user name.' });
@@ -12,4 +12,4 @@ const getLinkByUserName = async (req, res) => {
   return res.status(200).json(link);
 };
 
-export default getLinkByUserName;
+export default getUser;
