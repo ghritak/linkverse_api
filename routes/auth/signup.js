@@ -36,9 +36,14 @@ const signup = async (req, res) => {
       banner_photo: '',
     };
 
-    await userCollection.insertOne(userData);
+    const result = await userCollection.insertOne(userData);
+
+    // if(result.acknowledged){
+
+    // }
 
     await linksCollection.insertOne({
+      user_id: result.insertedId,
       username,
       links: [],
     });
