@@ -31,6 +31,16 @@ export const linkData = [
   },
   {
     id: 7,
+    name: 'YouTube',
+    logo: 'http://localhost:4000/images/logo/youtube.png',
+  },
+  {
+    id: 9,
+    name: 'Threads',
+    logo: 'http://localhost:4000/images/logo/threads.png',
+  },
+  {
+    id: 10,
     name: 'OnlyFans',
     logo: 'http://localhost:4000/images/logo/onlyfans.png',
   },

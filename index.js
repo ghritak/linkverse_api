@@ -1,23 +1,36 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import router from './routes/router.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
+
+const allowedOrigins = process.env.ORIGINS
+  ? process.env.ORIGINS.split(',')
+  : [];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    const isAllowed = allowedOrigins.includes(origin);
+    callback(null, isAllowed);
+  },
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const imagesDirectory = path.join(__dirname, 'images');
 
-// Serve static files from the images directory
 app.use('/images', express.static(imagesDirectory));
 
-// Example route to serve an image
 app.get('/image/:imageName', (req, res) => {
   const imageName = req.params.imageName;
   res.sendFile(path.join(imagesDirectory, imageName));

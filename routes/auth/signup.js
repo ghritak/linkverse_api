@@ -2,8 +2,8 @@ import bcrypt from 'bcrypt';
 
 const signup = async (req, res) => {
   try {
-    const { fname, lname, username, email, password } = req.body;
-    if (!fname || !lname || !username || !email || !password) {
+    const { name, username, email, password } = req.body;
+    if (!name || !username || !email || !password) {
       return res
         .status(400)
         .json({ message: 'Please provide all the details.' });
@@ -27,20 +27,16 @@ const signup = async (req, res) => {
     let hashedPassword = await bcrypt.hash(password, salt);
 
     const userData = {
-      fname,
-      lname,
+      name,
       username,
       email,
       password: hashedPassword,
+      bio: '',
       profile_photo: '',
       banner_photo: '',
     };
 
     const result = await userCollection.insertOne(userData);
-
-    // if(result.acknowledged){
-
-    // }
 
     await linksCollection.insertOne({
       user_id: result.insertedId,

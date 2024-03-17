@@ -5,19 +5,19 @@ const postLink = async (req, res) => {
   try {
     const { links } = req.body;
     const user_id = req.query.user_id;
+    console.log(user_id);
     const collection = req.database.collection('links');
-    // let user = await collection.findOne({ user_id }, { maxTimeMS: 15000 });
     const user = await collection.findOne(
       { user_id: new ObjectId(user_id) },
       { maxTimeMS: 15000 }
     );
 
-    if (user.user_id.toString() !== req.user_id) {
-      return res.status(401).json({ message: 'Unauthorized token.' });
-    }
-
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist." });
+    }
+
+    if (user.user_id.toString() !== req.user_id) {
+      return res.status(401).json({ message: 'Unauthorized token.' });
     }
 
     const result = await collection.updateOne(

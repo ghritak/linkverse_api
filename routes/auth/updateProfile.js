@@ -1,32 +1,32 @@
 const updateProfile = async (req, res) => {
   try {
-    const { email, fname, lname, username } = req.body;
+    const { email, name, username } = req.body;
     const collection = req.database.collection('users');
 
     let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
-
-    if (user._id.toString() !== req.user_id) {
-      return res.status(401).json({ message: 'Unauthorized token.' });
-    }
 
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist." });
     }
 
+    if (user._id.toString() !== req.user_id) {
+      return res.status(401).json({ message: 'Unauthorized token.' });
+    }
+
     const result = await collection.updateOne(
       { email: email },
-      { $set: { fname, lname, username } }
+      { $set: { name, username } }
     );
 
     if (result.modifiedCount > 0) {
       return res.status(200).json({
         message: 'Profile updated successfully',
-        data: { fname, lname, username, email },
+        data: { name, username, email },
       });
     } else {
       return res.status(200).json({
         message: 'Profile already up to date',
-        data: { fname, lname, username, email },
+        data: { name, username, email },
       });
     }
   } catch (error) {

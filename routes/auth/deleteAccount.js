@@ -7,12 +7,12 @@ const deleteAccount = async (req, res) => {
 
     let user = await userCollection.findOne({ email }, { maxTimeMS: 15000 });
 
-    if (user._id.toString() !== req.user_id) {
-      return res.status(401).json({ message: 'Unauthorized token.' });
-    }
-
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist." });
+    }
+
+    if (user._id.toString() !== req.user_id) {
+      return res.status(401).json({ message: 'Unauthorized token.' });
     }
 
     const username = user.username;

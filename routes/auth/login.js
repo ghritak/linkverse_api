@@ -31,8 +31,7 @@ const login = async (req, res) => {
         message: 'Logged in successfully',
         data: {
           _id: user._id,
-          fname: user.fname,
-          lname: user.lname,
+          name: user.name,
           username: user.username,
           email: user.email,
         },
