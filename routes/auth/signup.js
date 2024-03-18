@@ -8,6 +8,11 @@ const signup = async (req, res) => {
         .status(400)
         .json({ message: 'Please provide all the details.' });
     }
+    if (!validateUsername(username)) {
+      return res.status(400).json({
+        message: 'Invalid username, Space or special charaters not allowed',
+      });
+    }
     const userCollection = req.database.collection('users');
     const linksCollection = req.database.collection('links');
     let user = await userCollection.findOne({ email });
@@ -18,9 +23,9 @@ const signup = async (req, res) => {
     }
     user = await userCollection.findOne({ username });
     if (user) {
-      return res
-        .status(400)
-        .json({ message: 'User with this username already exists.' });
+      return res.status(400).json({
+        message: 'username already exists, please try other username.',
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -50,5 +55,11 @@ const signup = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+const usernamePattern = /^[a-zA-Z0-9_]+$/;
+
+function validateUsername(username) {
+  return usernamePattern.test(username);
+}
 
 export default signup;

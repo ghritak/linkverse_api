@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 
 const postLink = async (req, res) => {
