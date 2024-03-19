@@ -4,7 +4,7 @@ import updateProfile from './updateProfile.js';
 import authenticateToken from '../../middleware/authenticateToken.js';
 import deleteAccount from './deleteAccount.js';
 import updateProfilePicture from '../image/updateProfilePicture.js';
-import { uploadImage } from '../../middleware/multerStorage.js';
+import { uploadProfilePhotoMulter } from '../../middleware/multerStorage.js';
 
 const accountRouter = express.Router();
 
@@ -14,7 +14,7 @@ accountRouter.delete('/deleteAccount', authenticateToken, deleteAccount);
 accountRouter.post(
   '/updateProfilePicture',
   authenticateToken,
-  uploadImage.single('profile_photo'),
+  uploadProfilePhotoMulter.single('profile_photo'),
   updateProfilePicture
 );
 

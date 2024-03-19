@@ -3,8 +3,8 @@ import authRouter from './auth/index.js';
 import linkRouter from './links/index.js';
 import getLinkData from './constants/getLinkData.js';
 import accountRouter from './account/index.js';
+import { uploadLogoMulter } from '../middleware/multerStorage.js';
 import uploadLogo from './image/uploadLogo.js';
-import { uploadImage } from '../middleware/multerStorage.js';
 
 const router = express.Router();
 
@@ -16,6 +16,6 @@ router.use('/', authRouter);
 router.use('/api/link', linkRouter);
 router.get('/api/getLinkData', getLinkData);
 router.use('/profile', accountRouter);
-router.post('/uploadLogo', uploadImage.single('logo'), uploadLogo);
+router.post('/uploadLogo', uploadLogoMulter.single('logo'), uploadLogo);
 
 export default router;
