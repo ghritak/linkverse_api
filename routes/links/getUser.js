@@ -6,13 +6,15 @@ const getUser = async (req, res) => {
   const userCollection = req.database.collection('users');
   const link = await linkCollection.findOne({ username }, { maxTimeMS: 15000 });
   const user = await userCollection.findOne({ username }, { maxTimeMS: 15000 });
-  if (!link && !user) {
+  if (!link || !user) {
     return res
       .status(400)
       .json({ message: "Couldn't found user with the given username." });
   }
-  delete user.password;
-  delete user.email;
+
+  user && delete user.password;
+  user && delete user.email;
+
   const data = {
     ...link,
     ...user,

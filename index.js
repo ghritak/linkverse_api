@@ -28,13 +28,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const imagesDirectory = path.join(__dirname, 'images');
-
 app.use('/images', express.static(imagesDirectory));
 
 app.get('/image/:imageName', (req, res) => {
   const imageName = req.params.imageName;
   res.sendFile(path.join(imagesDirectory, imageName));
 });
+
+const profilePicturesDirectory = process.env.IMAGE_UPLOAD_FOLDER;
+
+app.use('/profile_photo', express.static(profilePicturesDirectory));
 
 const client = new MongoClient(process.env.DB_URL, {
   //   useNewUrlParser: true,

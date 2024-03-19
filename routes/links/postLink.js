@@ -4,10 +4,9 @@ const postLink = async (req, res) => {
   try {
     const { links } = req.body;
     const user_id = req.query.user_id;
-    console.log(user_id);
     const collection = req.database.collection('links');
     const user = await collection.findOne(
-      { user_id: new ObjectId(user_id) },
+      { user_id: new ObjectId(`${user_id}`) },
       { maxTimeMS: 15000 }
     );
 
@@ -20,7 +19,7 @@ const postLink = async (req, res) => {
     }
 
     const result = await collection.updateOne(
-      { user_id: new ObjectId(user_id) },
+      { user_id: new ObjectId(`${user_id}`) },
       { $set: { links: links } }
     );
 

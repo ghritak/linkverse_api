@@ -7,7 +7,7 @@ const getUserProfile = async (req, res) => {
   const link = await linkCollection.findOne({ username }, { maxTimeMS: 15000 });
   const user = await userCollection.findOne({ username }, { maxTimeMS: 15000 });
 
-  if (!link && !user) {
+  if (!link || !user) {
     return res
       .status(400)
       .json({ message: "Couldn't found user with the given username." });
@@ -17,7 +17,7 @@ const getUserProfile = async (req, res) => {
     return res.status(401).json({ message: 'Unauthorized token.' });
   }
 
-  delete user.password;
+  user.password && delete user.password;
 
   const data = {
     ...link,
