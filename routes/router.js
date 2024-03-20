@@ -1,11 +1,11 @@
 import express from 'express';
 import authRouter from './auth/index.js';
 import linkRouter from './links/index.js';
-import getLinkData from './constants/getLinkData.js';
+import getLinkData from './utils/getLinkData.js';
 import accountRouter from './account/index.js';
 import { uploadLogoMulter } from '../middleware/multerStorage.js';
 import uploadLogo from './image/uploadLogo.js';
-import { sendVerificationEmail } from '../utils/sendEmailOtp.js';
+import { sendVerificationEmail } from './utils/sendEmailOtp.js';
 
 const router = express.Router();
 

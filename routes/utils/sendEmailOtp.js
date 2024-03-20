@@ -1,18 +1,5 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-    accessToken: process.env.ACCESS_TOKEN,
-  },
-});
-
 const emailTemplate = (otp) => {
   return `
     <p>Your verification OTP is: <strong>${otp}</strong></p>
@@ -27,13 +14,27 @@ const generateOTP = () => {
 export const sendVerificationEmail = async (req, res) => {
   try {
     const otp = generateOTP();
-    const userEmail = 'ghritakjyotivital@gmail.com';
+
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ message: 'Invalid Email' });
+    }
     const mailOptions = {
       from: process.env.EMAIL,
-      to: userEmail,
+      to: email,
       subject: 'Verification OTP',
       html: emailTemplate(otp),
     };
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      secure: true,
+      port: 465,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
 
     transporter.sendMail(mailOptions, (error) => {
       if (error) {
@@ -43,6 +44,10 @@ export const sendVerificationEmail = async (req, res) => {
       return res
         .status(200)
         .json({ message: 'Verification email sent successfully.', otp });
+    });
+
+    return res.status(200).json({
+      message: 'Verification email sent successfully.',
     });
   } catch (error) {
     console.error('Error sending verification email:', error);
