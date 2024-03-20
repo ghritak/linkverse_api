@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { validateEmail } from '../../utils/index.js';
 
 const emailTemplate = (otp) => {
   return `
@@ -14,9 +15,8 @@ const generateOTP = () => {
 export const sendVerificationEmail = async (req, res) => {
   try {
     const otp = generateOTP();
-
     const { email } = req.query;
-    if (!email) {
+    if (!email || !validateEmail(email)) {
       return res.status(400).json({ message: 'Invalid Email' });
     }
     const mailOptions = {

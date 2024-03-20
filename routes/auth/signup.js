@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { validateUsername } from '../../utils/index.js';
 
 const signup = async (req, res) => {
   try {
@@ -55,11 +56,5 @@ const signup = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-const usernamePattern = /^[a-zA-Z0-9_]+$/;
-
-function validateUsername(username) {
-  return usernamePattern.test(username);
-}
 
 export default signup;
