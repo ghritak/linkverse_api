@@ -5,6 +5,7 @@ import router from './routes/router.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import cors from 'cors';
+import session from 'express-session';
 
 dotenv.config();
 
@@ -66,6 +67,13 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use('/', router);
 

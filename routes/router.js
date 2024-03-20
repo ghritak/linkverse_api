@@ -6,6 +6,7 @@ import accountRouter from './account/index.js';
 import { uploadLogoMulter } from '../middleware/multerStorage.js';
 import uploadLogo from './image/uploadLogo.js';
 import { sendVerificationEmail } from './utils/sendEmailOtp.js';
+import { verifyEmail } from './utils/verifyOtp.js';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.use('/api/link', linkRouter);
 router.get('/api/getLinkData', getLinkData);
 router.use('/profile', accountRouter);
 router.post('/uploadLogo', uploadLogoMulter.single('logo'), uploadLogo);
-router.post('/api/send_recovery_email', sendVerificationEmail);
+router.post('/api/send_verification_email', sendVerificationEmail);
+router.get('/api/verify_email', verifyEmail);
 
 export default router;

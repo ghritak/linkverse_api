@@ -2,7 +2,6 @@ const uploadLogo = async (req, res) => {
   try {
     if (!req.file)
       return res.status(400).json({ message: 'No file uploaded.' });
-    console.log(req.file);
     return res.status(200).json({
       message: 'Logo uploaded succesfully.',
       filename: `/logo/${req.file.filename}`,
