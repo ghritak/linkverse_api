@@ -20,6 +20,6 @@ router.get('/api/getLinkData', getLinkData);
 router.use('/profile', accountRouter);
 router.post('/uploadLogo', uploadLogoMulter.single('logo'), uploadLogo);
 router.post('/api/send_verification_email', sendVerificationEmail);
-router.get('/api/verify_email', verifyEmail);
+router.post('/api/verify_email', verifyEmail);
 
 export default router;
