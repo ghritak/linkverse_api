@@ -5,7 +5,7 @@ import { validateEmail } from '../../utils/index.js';
 const emailTemplate = (otp) => {
   return `
     <p>Your verification OTP is: <strong>${otp}</strong></p>
-    <p>Please use this OTP to complete the signup process.</p>
+    <p>Please use this OTP to complete the process.</p>
   `;
 };
 

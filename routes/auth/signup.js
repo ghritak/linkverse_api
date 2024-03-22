@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { validateUsername } from '../../utils/index.js';
 
 const signup = async (req, res) => {
   try {
@@ -9,25 +8,9 @@ const signup = async (req, res) => {
         .status(400)
         .json({ message: 'Please provide all the details.' });
     }
-    if (!validateUsername(username)) {
-      return res.status(400).json({
-        message: 'Invalid username, Space or special charaters not allowed',
-      });
-    }
+
     const userCollection = req.database.collection('users');
     const linksCollection = req.database.collection('links');
-    let user = await userCollection.findOne({ email });
-    if (user) {
-      return res
-        .status(400)
-        .json({ message: 'User with this email already exist.' });
-    }
-    user = await userCollection.findOne({ username });
-    if (user) {
-      return res.status(400).json({
-        message: 'username already exists, please try other username.',
-      });
-    }
 
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
