@@ -36,7 +36,6 @@ The project structure is as follows:
 - `public/`: Directory for static files such as CSS, JavaScript, and images.
 - `views/`: Directory containing template files (e.g., `.ejs`, `.pug`) for rendering HTML views.
 - `middlewares/`: Directory for custom middleware functions.
-- `models/`: Directory for database models (if using a database).
 - `config/`: Directory for configuration files (e.g., environment variables, database configurations).
 - `tests/`: Directory for unit tests (optional).
 
@@ -52,7 +51,3 @@ In the project directory, you can run:
 ## Contributing
 
 If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. Contributions are welcome!
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
