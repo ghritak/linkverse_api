@@ -1,5 +1,7 @@
 # Linkverse Backend API
 
+One Click, Infinite Connections!
+
 Welcome to Linkverse, a simple yet powerful tool for creating a personalized landing page to showcase links to your social media profiles, websites, and more. With our easy-to-use interface and customizable themes, you can create a beautiful and professional-looking page in minutes. Say goodbye to cluttered bios and hello to a clean, centralized hub for all your online presence. Get started today and make every link count!
 
 ## Getting Started
