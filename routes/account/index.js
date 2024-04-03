@@ -5,10 +5,12 @@ import authenticateToken from '../../middleware/authenticateToken.js';
 import deleteAccount from './deleteAccount.js';
 import updateProfilePicture from '../image/updateProfilePicture.js';
 import { uploadProfilePhotoMulter } from '../../middleware/multerStorage.js';
+import changeTheme from './changeTheme.js';
 
 const accountRouter = express.Router();
 
 accountRouter.put('/changePassword', changePassword);
+accountRouter.put('/changeTheme', authenticateToken, changeTheme);
 accountRouter.put('/updateProfile', authenticateToken, updateProfile);
 accountRouter.delete('/deleteAccount', authenticateToken, deleteAccount);
 accountRouter.post(
