@@ -8,7 +8,7 @@ const deleteAccount = async (req, res) => {
     let user = await userCollection.findOne({ email }, { maxTimeMS: 15000 });
 
     if (!user) {
-      return res.status(400).json({ message: "User doesn't exist." });
+      return res.status(404).json({ message: "User doesn't exist." });
     }
 
     if (user._id.toString() !== req.user_id) {

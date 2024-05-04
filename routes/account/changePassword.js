@@ -7,7 +7,7 @@ const changePassword = async (req, res) => {
     let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
 
     if (!user) {
-      return res.status(400).json({ message: "User doesn't exist." });
+      return res.status(404).json({ message: "User doesn't exist." });
     }
     const salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);

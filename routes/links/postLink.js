@@ -11,7 +11,7 @@ const postLink = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(400).json({ message: "User doesn't exist." });
+      return res.status(404).json({ message: "User doesn't exist." });
     }
 
     if (user.user_id.toString() !== req.user_id) {
