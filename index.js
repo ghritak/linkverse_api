@@ -37,16 +37,7 @@ app.get('/image/:imageName', (req, res) => {
   res.sendFile(path.join(imagesDirectory, imageName));
 });
 
-const profilePicturesDirectory = process.env.PROFILE_PHOTO_FOLDER;
-app.use('/profile_photo', express.static(profilePicturesDirectory));
-
-const logoDirectory = process.env.LOGO_FOLDER;
-app.use('/logo', express.static(logoDirectory));
-
-const client = new MongoClient(process.env.DB_URL, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-});
+const client = new MongoClient(process.env.DB_URL);
 
 let database;
 const connectToMongoDB = async () => {

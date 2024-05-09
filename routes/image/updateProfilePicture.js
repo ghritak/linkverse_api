@@ -19,7 +19,7 @@ const updateProfilePicture = async (req, res) => {
 
     const result = await collection.updateOne(
       { username },
-      { $set: { profile_photo: `/profile_photo/${req.file.filename}` } }
+      { $set: { profile_photo: `/images/profile_photos/${req.file.filename}` } }
     );
 
     if (result.modifiedCount === 1) {
