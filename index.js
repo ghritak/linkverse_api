@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import cors from 'cors';
 import session from 'express-session';
+import './cronning.js';
 
 dotenv.config();
 
