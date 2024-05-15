@@ -8,7 +8,6 @@ const job = new cron.CronJob('*/14 * * * *', () => {
   https
     .get(linkverse_api, (res) => {
       if (res.statusCode === 200) {
-        console.log('Server restarted');
       } else {
         console.error(
           `Failed to restart server with status code: ${res.statusCode}`
@@ -21,7 +20,6 @@ const job = new cron.CronJob('*/14 * * * *', () => {
   https
     .get(wanderway_api, (res2) => {
       if (res2.statusCode === 200) {
-        console.log('API 2 called successfully');
       } else {
         console.error(
           `Failed to call API 2 with status code: ${res2.statusCode}`
