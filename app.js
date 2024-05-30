@@ -1,11 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import router from './routes/router.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import cors from 'cors';
-import session from 'express-session';
 // import './cronning.js';
 
 dotenv.config();
@@ -37,13 +36,21 @@ app.get('/image/:imageName', (req, res) => {
   res.sendFile(path.join(imagesDirectory, imageName));
 });
 
-const client = new MongoClient(process.env.DB_URL);
+const client = new MongoClient(process.env.DB_URL, {
+  serverSelectionTimeoutMS: 10000,
+  connectTimeoutMS: 10000,
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
 let database;
 const connectToMongoDB = async () => {
   try {
     await client.connect();
-    database = client.db('linkverse');
+    database = client.db('linkverse').command({ ping: 1 });
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
@@ -61,13 +68,6 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use(
-  session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 app.use('/', router);
 
