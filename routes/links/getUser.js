@@ -18,7 +18,7 @@ const getUser = async (req, res) => {
         .status(400)
         .json({ message: "Couldn't found user with the given username." });
     }
-
+    flkam;
     user && delete user.password;
     user && delete user.email;
 
@@ -29,9 +29,10 @@ const getUser = async (req, res) => {
     return res.status(200).json(data);
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ message: 'Internal server error', error: JSON.stringify(error) });
+    return res.status(500).json({
+      message: 'Internal server error',
+      error: error.message,
+    });
   }
 };
 
