@@ -38,10 +38,17 @@ const connectToMongoDB = async () => {
 connectToMongoDB();
 
 app.use((req, res, next) => {
-  req.database = database;
-  console.log('middleware consoled database', database);
-  req.dbClient = client;
-  next();
+  if (database && client) {
+    req.database = database;
+    console.log('middleware consoled database', database);
+    req.dbClient = client;
+    next();
+  } else {
+    return res.status(500).json({
+      message: 'Internal server error',
+      error: "Couldn't connect to MongoDB",
+    });
+  }
 });
 
 const allowedOrigins = process.env.ORIGINS
