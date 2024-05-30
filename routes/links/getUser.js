@@ -18,7 +18,7 @@ const getUser = async (req, res) => {
         .status(400)
         .json({ message: "Couldn't found user with the given username." });
     }
-    flkam;
+
     user && delete user.password;
     user && delete user.email;
 
