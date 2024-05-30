@@ -11,34 +11,9 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = process.env.ORIGINS
-  ? process.env.ORIGINS.split(',')
-  : [];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    const isAllowed = allowedOrigins.includes(origin);
-    callback(null, isAllowed);
-  },
-  optionsSuccessStatus: 200,
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const imagesDirectory = path.join(__dirname, 'images');
-app.use('/images', express.static(imagesDirectory));
-
-app.get('/image/:imageName', (req, res) => {
-  const imageName = req.params.imageName;
-  res.sendFile(path.join(imagesDirectory, imageName));
-});
-
 const client = new MongoClient(process.env.DB_URL, {
-  serverSelectionTimeoutMS: 10000,
-  connectTimeoutMS: 10000,
+  serverSelectionTimeoutMS: 60000,
+  connectTimeoutMS: 60000,
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -67,6 +42,31 @@ app.use((req, res, next) => {
   console.log('middleware consoled database', database);
   req.dbClient = client;
   next();
+});
+
+const allowedOrigins = process.env.ORIGINS
+  ? process.env.ORIGINS.split(',')
+  : [];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    const isAllowed = allowedOrigins.includes(origin);
+    callback(null, isAllowed);
+  },
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const imagesDirectory = path.join(__dirname, 'images');
+app.use('/images', express.static(imagesDirectory));
+
+app.get('/image/:imageName', (req, res) => {
+  const imageName = req.params.imageName;
+  res.sendFile(path.join(imagesDirectory, imageName));
 });
 
 app.use(express.json());
