@@ -12,8 +12,6 @@ dotenv.config();
 const app = express();
 
 const client = new MongoClient(process.env.MONGODB_URI, {
-  serverSelectionTimeoutMS: 60000,
-  connectTimeoutMS: 60000,
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -24,10 +22,8 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 let database;
 const connectToMongoDB = async () => {
   try {
-    console.log('Attempting to connect to MongoDB...');
     await client.connect();
-    console.log('client Connected.');
-    database = client.db('linkverse').command({ ping: 1 });
+    database = client.db('linkverse');
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
@@ -38,17 +34,10 @@ const connectToMongoDB = async () => {
 connectToMongoDB();
 
 app.use((req, res, next) => {
-  if (database && client) {
-    req.database = database;
-    console.log('middleware consoled database', database);
-    req.dbClient = client;
-    next();
-  } else {
-    return res.status(500).json({
-      message: 'Internal server error',
-      error: "Couldn't connect to MongoDB",
-    });
-  }
+  req.database = database;
+  console.log('middleware consoled database', database);
+  req.dbClient = client;
+  next();
 });
 
 const allowedOrigins = process.env.ORIGINS
