@@ -49,7 +49,9 @@ const client = new MongoClient(process.env.DB_URL, {
 let database;
 const connectToMongoDB = async () => {
   try {
+    console.log('Attempting to connect to MongoDB...');
     await client.connect();
+    console.log('client Connected.');
     database = client.db('linkverse').command({ ping: 1 });
     console.log('Connected to MongoDB');
   } catch (error) {
