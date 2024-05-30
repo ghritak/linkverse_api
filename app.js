@@ -50,10 +50,12 @@ const connectToMongoDB = async () => {
     process.exit(1);
   }
 };
+
 connectToMongoDB();
 
 app.use((req, res, next) => {
   req.database = database;
+  console.log('middleware consoled database', database);
   req.dbClient = client;
   next();
 });
