@@ -1,11 +1,11 @@
 {
   "name": "linkverse_api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node ./build/index.js",
-    "dev": "nodemon ./src/index.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "build": "babel src -d build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",

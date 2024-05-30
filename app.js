@@ -69,9 +69,9 @@ app.use(
 
 app.use('/', router);
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.listen(process.env.PORT, (error) => {
+app.listen(PORT, (error) => {
   if (!error)
     console.log(
       'Server is Successfully Running,  and App is listening on port ' + PORT
