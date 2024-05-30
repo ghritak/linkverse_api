@@ -5,14 +5,8 @@ const getUser = async (req, res) => {
       return res.status(400).json({ message: 'Please provide a user name.' });
     const linkCollection = req.database.collection('links');
     const userCollection = req.database.collection('users');
-    const link = await linkCollection.findOne(
-      { username },
-      { maxTimeMS: 15000 }
-    );
-    const user = await userCollection.findOne(
-      { username },
-      { maxTimeMS: 15000 }
-    );
+    const link = await linkCollection.findOne({ username });
+    const user = await userCollection.findOne({ username });
     if (!link || !user) {
       return res
         .status(400)

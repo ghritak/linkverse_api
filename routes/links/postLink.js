@@ -5,10 +5,9 @@ const postLink = async (req, res) => {
     const { links } = req.body;
     const user_id = req.query.user_id;
     const collection = req.database.collection('links');
-    const user = await collection.findOne(
-      { user_id: new ObjectId(`${user_id}`) },
-      { maxTimeMS: 15000 }
-    );
+    const user = await collection.findOne({
+      user_id: new ObjectId(`${user_id}`),
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist." });

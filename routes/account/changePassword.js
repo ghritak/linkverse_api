@@ -4,7 +4,7 @@ const changePassword = async (req, res) => {
   try {
     const { email, password } = req.body;
     const collection = req.database.collection('users');
-    let user = await collection.findOne({ email }, { maxTimeMS: 15000 });
+    let user = await collection.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist." });

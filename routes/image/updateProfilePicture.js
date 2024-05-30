@@ -7,7 +7,7 @@ const updateProfilePicture = async (req, res) => {
 
     const collection = req.database.collection('users');
 
-    let user = await collection.findOne({ username }, { maxTimeMS: 15000 });
+    let user = await collection.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist." });

@@ -17,7 +17,7 @@ const updateProfile = async (req, res) => {
       });
     }
 
-    let user = await userCollection.findOne({ email }, { maxTimeMS: 15000 });
+    let user = await userCollection.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User doesn't exist." });
