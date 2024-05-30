@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 
-const client = new MongoClient(process.env.DB_URL, {
+const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 60000,
   connectTimeoutMS: 60000,
   serverApi: {
