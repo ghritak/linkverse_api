@@ -14,19 +14,25 @@ To get started with this project, follow these steps:
    git clone https://github.com/ghritak/linkverse_api.git
    ```
 
-2. **Install dependencies**:
+2. **Navigate into the project directory**
+
+   ```
+   cd linkverse_api
+   ```
+
+3. **Install dependencies**
 
    ```
    npm install
    ```
 
-3. **Start the development server**:
+4. **Start the development server**
 
    ```
    npm start
    ```
 
-4. **Visit the application in your browser**:
+5. **Visit the application in your browser**
    - Open your web browser and navigate to [http://localhost:3000](http://localhost:3000).
 
 ## Project Structure
